@@ -3,31 +3,24 @@ import {
   InMemoryCache,
   HttpLink,
 } from "@apollo/client";
-
-import {
-  setContext,
-} from "@apollo/client/link/context";
+import { setContext } from "@apollo/client/link/context";
 
 const httpLink = new HttpLink({
-  uri: import.meta.env.VITE_GRAPHQL_URL ||
+  uri:
+    import.meta.env.VITE_GRAPHQL_URL ||
     "/graphql",
 });
 
 const authLink = setContext(
   (_, { headers }) => {
-    const token =
-      localStorage.getItem(
-        "stockstalk_token"
-      );
+    const token = localStorage.getItem("stockstalk_token");
 
     return {
       headers: {
         ...headers,
-
         ...(token
           ? {
-              Authorization:
-                `Bearer ${token}`,
+              Authorization: `Bearer ${token}`,
             }
           : {}),
       },
@@ -37,7 +30,6 @@ const authLink = setContext(
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-
   cache: new InMemoryCache(),
 });
 
