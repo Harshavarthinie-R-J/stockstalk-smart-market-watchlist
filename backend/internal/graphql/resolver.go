@@ -13,6 +13,7 @@ import (
 	"stockstalk/internal/user"
 	"stockstalk/internal/watchlist"
 	"time"
+	"net/http"
 )
 
 type Resolver struct {
