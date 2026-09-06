@@ -80,7 +80,13 @@ func main() {
 	); err != nil {
 		appLogger.Fatal(err)
 	}
-
+	if err := db.Migrate(
+		context.Background(),
+		database.DB,
+		"migrations/004_snapshot_history.sql",
+	); err != nil {
+		appLogger.Fatal(err)
+	}
 	// ------------------------------------------------------------
 	// Application context / graceful shutdown
 	// ------------------------------------------------------------
