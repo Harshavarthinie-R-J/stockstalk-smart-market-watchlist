@@ -1,210 +1,333 @@
-# StockStalk Backend
+# StockStalk
 
-Backend service for **StockStalk**, a market watchlist that identifies meaningful changes in the stocks a user follows and helps explain what deserves attention.
+### Smart Market Watchlist
 
-## Tech Stack
+> **Your stocks. What changed. What matters.**
 
-* Go
-* GraphQL
-* PostgreSQL
-* Redis
-* JWT
-* Docker
+StockStalk is a smart market watchlist built to help users understand which changes in their tracked stocks actually deserve attention.
 
-## Current Backend Responsibilities
+Instead of only showing price, percentage change, and volume, StockStalk compares the current market state with previous observations and historical behaviour to identify meaningful and unusual market events.
 
-* User registration and authentication
-* JWT-based authorization
-* Stock/instrument search and lookup
-* Watchlist creation and management
-* Market-data abstraction
-* Market quotes and snapshots
-* User checkpoints
-* Meaningful-change detection
-* "Since Last Visit" comparison
-* GraphQL queries and mutations
+---
 
-## Core Flow
+## Problem
 
-```text
-User
-→ Watchlist
-→ Market Data
-→ Snapshot
-→ Checkpoint
-→ Change Detection
-→ GraphQL
-→ Frontend
-```
+Traditional stock watchlists show market data, but users still have to manually figure out:
 
-## Backend Structure
+- What changed since they last checked?
+- Was the movement unusual?
+- Is the trading volume abnormal?
+- Which stock deserves attention first?
+- What evidence supports the event?
 
-```text
-cmd/server
-    Application entry point and dependency wiring
+StockStalk addresses this information overload by turning market observations into prioritized and explainable events.
 
-internal/auth
-    Registration, login, JWT and authentication middleware
+---
 
-internal/user
-    User model, service and repository
+## Key Features
 
-internal/instrument
-    Stock identity, metadata and search
+### 📊 Smart Watchlists
+- Create and manage watchlists
+- Add, remove, and reorder stocks
+- Search instruments
+- View current market information
 
-internal/watchlist
-    Watchlist and stock membership management
+### 🔎 Since You Last Checked
+Compares the current market state with the user's previous checkpoint and highlights meaningful changes.
 
-internal/marketdata
-    Market models, provider abstraction and snapshots
+### 📈 Personal Baseline
+Compares a stock's current behaviour with its own historical behaviour instead of using the same threshold for every stock.
 
-internal/checkpoint
-    User watchlist checkpoints
+### ⚡ Event Fusion
+Combines related signals such as:
 
-internal/change
-    Meaningful market-change detection
+- Price movement
+- Volume anomaly
+- Price anomaly
+- 52-week conditions
+- Relative movement
 
-internal/graphql
-    GraphQL schema, resolvers and server
+into a single meaningful event.
 
-internal/db
-    PostgreSQL connection, migrations and seed logic
+### 🎯 Attention Score
+Ranks events based on measurable factors such as:
 
-pkg/logger
-    Shared logging
+- Movement magnitude
+- Historical unusualness
+- Volume anomaly
+- Relative movement
+- Event importance
+- Recency
 
-pkg/response
-    Shared response structures
+### 🧠 Context & Confidence
+Provides supporting context while clearly indicating attribution confidence:
 
-mock
-    Development market-data source
-```
+- HIGH
+- MEDIUM
+- LOW
+- NO CLEAR CONTEXT
 
-## Product Logic
+StockStalk does not automatically claim that a particular event caused a price movement without sufficient evidence.
 
-StockStalk does not simply display current prices.
+### 🗂️ Event Memory
+Important events are persisted so users can review what happened previously.
 
-It compares the current market state with the user's previous checkpoint and identifies changes that deserve attention.
+### 📉 Historical Charts
+View persisted price history for:
 
-The initial change signals include:
+- 1 Day
+- 1 Week
+- 1 Month
 
-* Significant price movement
-* 52-week high/low
-* Notable market changes
+### 💡 Stocks to Consider
+Highlights stocks outside the current watchlist that show unusual observed activity.
 
-The advanced intelligence layer will later add:
+This is for market awareness and discovery, **not a buy/sell recommendation**.
 
-* Event Fusion
-* Personal Baselines
-* Salience Scoring
-* Context and Attribution
-* Event Memory
+### 🟢 Data Reliability
+Market observations can be marked as:
 
-## API
+- LIVE
+- DELAYED
+- STALE
+- UNAVAILABLE
+- CONFLICTING
 
-GraphQL is the primary client-facing API.
+---
 
-### Queries
+## How It Works
 
-```text
-me
-market
-quote
-searchInstruments
-watchlists
-watchlist
-changesSinceLastVisit
-```
+Market Data
+     ↓
+Market Snapshot
+     ↓
+Historical Baseline
+     ↓
+Change Detection
+     ↓
+Signal Detection
+     ↓
+Event Fusion
+     ↓
+Context & Confidence
+     ↓
+Attention Score
+     ↓
+Event Memory
+     ↓
+Since You Last Checked
 
-### Mutations
 
-```text
-register
-login
-createWatchlist
-renameWatchlist
-deleteWatchlist
-addStock
-removeStock
-createCheckpoint
-```
+### Technology Stack
+Layer	            Technology
+Frontend       	React + TypeScript
+Build Tool	         Vite
+API Client    	Apollo Client
+API	                GraphQL
+Backend	              Go
+Database	       PostgreSQL
+Authentication        JWT
+Password Security	 bcrypt
+Charts           	Recharts
+Local Database       Docker
+Deployment	         Render
+Version Control	   Git + GitHub
 
-### Future Subscriptions
+### Architecture
+                    User
+                      │
+                      ▼
+             React + TypeScript
+                      │
+                      │ GraphQL
+                      ▼
+                Go Backend
+                      │
+          ┌───────────┴───────────┐
+          │                       │
+   Event Intelligence       Watchlist/Auth
+          │                       │
+          └───────────┬───────────┘
+                      │
+                      ▼
+                 PostgreSQL
+                 
+### Backend Structure
 
-```text
-marketUpdate
-meaningfulChange
-watchlistEvent
-```
+backend/
+├── cmd/server/
+├── internal/
+│   ├── auth/
+│   ├── change/
+│   ├── checkpoint/
+│   ├── config/
+│   ├── db/
+│   ├── graphql/
+│   ├── instrument/
+│   ├── marketdata/
+│   ├── metrics/
+│   ├── processor/
+│   ├── user/
+│   └── watchlist/
+├── migrations/
+│   ├── 001_init.sql
+│   ├── 002_event_intelligence.sql
+│   ├── 003_event_context.sql
+│   └── 004_snapshot_history.sql
+└── mock/
+    └── market_data.json
 
-## Engineering Principles
+    
+### Frontend Structure
+frontend/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── lib/
+├── package.json
+└── vite.config.ts
+Local Setup
+Prerequisites
 
-* Keep GraphQL resolvers thin.
-* Keep business logic inside services.
-* Keep persistence behind repository interfaces.
-* Keep market-data providers replaceable.
-* Keep processing deterministic and testable.
-* Enforce user ownership in the backend.
-* Handle stale and unavailable data explicitly.
-* Prefer modular architecture over premature microservices.
-* Design for horizontal scalability without unnecessary infrastructure.
+Install:
 
-## Development
+Node.js LTS
+Go
+Docker Desktop
+Git
+1. Clone the Repository
+git clone https://github.com/Harshavarthinie-R-J/stockstalk-smart-market-watchlist.git
 
-Run tests:
+cd stockstalk-smart-market-watchlist
+2. Start PostgreSQL
+cd backend
+docker compose up -d
+3. Start Backend
 
-```bash
-go test ./...
-```
+In PowerShell:
 
-Run the backend:
+$env:DATABASE_URL="postgres://postgres:postgres@localhost:5432/stockstalk?sslmode=disable"
+$env:JWT_SECRET="change-me"
 
-```bash
 go run ./cmd/server
-```
 
-Health endpoint:
+Backend:
 
-```text
-GET /health
-```
+http://localhost:8080
 
-GraphQL endpoint:
+Health check:
 
-```text
-/graphql
-```
+http://localhost:8080/health
 
-## Development Data
+GraphQL:
 
-The current development environment uses:
+http://localhost:8080/graphql
+4. Start Frontend
 
-```text
-mock/market_data.json
-```
+Open another terminal:
 
-The data source is isolated behind the market-data layer so it can later be replaced by a live provider without changing the rest of the application.
+cd frontend
+npm install
+npm run dev
 
-## Architecture Direction
+Frontend:
 
-The backend is designed to evolve from:
+http://localhost:5173
+Environment Variables
+Backend
+APP_PORT=8080
+APP_ENV=development
+MARKET_DATA_FILE=mock/market_data.json
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/stockstalk?sslmode=disable
+JWT_SECRET=change-me
+Frontend
 
-```text
-Go
-→ Services
-→ In-memory repositories
-→ Mock market data
-```
+For production:
 
-to:
+VITE_GRAPHQL_URL=https://stockstalk-smart-market-watchlist-1.onrender.com/graphql
+Production Deployment
 
-```text
-Go
-→ GraphQL
-→ Services
-→ PostgreSQL + Redis
-→ Live market data
-→ Event processing
-```
+StockStalk is deployed using Render.
 
-The long-term goal is to provide a scalable backend that converts raw market activity into meaningful, explainable watchlist events.
+### Frontend
+https://stockstalk-frontend.onrender.com
+Backend
+https://stockstalk-smart-market-watchlist-1.onrender.com
+GraphQL
+https://stockstalk-smart-market-watchlist-1.onrender.com/graphql
+
+### Architecture
+Browser
+   ↓
+Render Frontend
+   ↓
+HTTPS / GraphQL
+   ↓
+Render Go Backend
+   ↓
+Render PostgreSQL
+
+### Database Migrations
+
+The project uses PostgreSQL migrations:
+
+001_init.sql
+002_event_intelligence.sql
+003_event_context.sql
+004_snapshot_history.sql
+
+The snapshot-history migration adds indexes for efficient historical data retrieval and snapshot deduplication.
+
+### Authentication
+
+StockStalk uses:
+
+JWT
+
+for authentication and:
+
+bcrypt
+
+for secure password hashing.
+
+Authenticated GraphQL requests use:
+
+Authorization: Bearer <JWT>
+Design Principle
+
+StockStalk is designed around one simple idea:
+
+Don't watch every movement. Know what matters.
+
+The system focuses on:
+
+Market awareness
+Event prioritization
+Explainability
+Historical comparison
+Data reliability
+
+rather than predicting the future price of a stock.
+
+What StockStalk Does NOT Do
+
+StockStalk intentionally does not provide:
+
+Buy/sell recommendations
+Automated trading
+Portfolio optimization
+Stock-price prediction
+Brokerage execution
+
+It is an intelligent market monitoring and awareness tool.
+
+Future Enhancements
+Live market-data providers
+Real-time WebSocket events
+News and company-event integration
+Advanced volatility and sector baselines
+Redis-based caching
+Background event-processing workers
+AI-assisted event summaries
+Mobile application
