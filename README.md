@@ -26,19 +26,23 @@ StockStalk addresses this information overload by turning market observations in
 
 ## Key Features
 
-### 📊 Smart Watchlists
+### Smart Watchlists
+
 - Create and manage watchlists
 - Add, remove, and reorder stocks
 - Search instruments
 - View current market information
 
-### 🔎 Since You Last Checked
+### Since You Last Checked
+
 Compares the current market state with the user's previous checkpoint and highlights meaningful changes.
 
-### 📈 Personal Baseline
+### Personal Baseline
+
 Compares a stock's current behaviour with its own historical behaviour instead of using the same threshold for every stock.
 
-### ⚡ Event Fusion
+### Event Fusion
+
 Combines related signals such as:
 
 - Price movement
@@ -49,8 +53,9 @@ Combines related signals such as:
 
 into a single meaningful event.
 
-### 🎯 Attention Score
-Ranks events based on measurable factors such as:
+### Attention Score
+
+Ranks events using measurable factors such as:
 
 - Movement magnitude
 - Historical unusualness
@@ -59,7 +64,8 @@ Ranks events based on measurable factors such as:
 - Event importance
 - Recency
 
-### 🧠 Context & Confidence
+### Context & Confidence
+
 Provides supporting context while clearly indicating attribution confidence:
 
 - HIGH
@@ -69,22 +75,26 @@ Provides supporting context while clearly indicating attribution confidence:
 
 StockStalk does not automatically claim that a particular event caused a price movement without sufficient evidence.
 
-### 🗂️ Event Memory
-Important events are persisted so users can review what happened previously.
+### Event Memory
 
-### 📉 Historical Charts
+Important events are stored so users can review what happened previously.
+
+### Historical Charts
+
 View persisted price history for:
 
 - 1 Day
 - 1 Week
 - 1 Month
 
-### 💡 Stocks to Consider
+### Stocks to Consider
+
 Highlights stocks outside the current watchlist that show unusual observed activity.
 
 This is for market awareness and discovery, **not a buy/sell recommendation**.
 
-### 🟢 Data Reliability
+### Data Reliability
+
 Market observations can be marked as:
 
 - LIVE
@@ -118,44 +128,48 @@ Event Memory
 Since You Last Checked
 
 
-### Technology Stack
-Layer	            Technology
-Frontend       	React + TypeScript
-Build Tool	         Vite
-API Client    	Apollo Client
-API	                GraphQL
-Backend	              Go
-Database	       PostgreSQL
-Authentication        JWT
-Password Security	 bcrypt
-Charts           	Recharts
-Local Database       Docker
-Deployment	         Render
-Version Control	   Git + GitHub
+Technology Stack
+Layer	Technology
+Frontend	React + TypeScript
+Build Tool	Vite
+API Client	Apollo Client
+API	GraphQL
+Backend	Go
+Database	PostgreSQL
+Authentication	JWT
+Password Security	bcrypt
+Charts	Recharts
+Local Database	Docker
+Deployment	Render
+Version Control	Git + GitHub
 
-### Architecture
+
+Architecture
                     User
-                      │
-                      ▼
+                      |
+                      ↓
              React + TypeScript
-                      │
-                      │ GraphQL
-                      ▼
-                Go Backend
-                      │
-          ┌───────────┴───────────┐
-          │                       │
-   Event Intelligence       Watchlist/Auth
-          │                       │
-          └───────────┬───────────┘
-                      │
-                      ▼
+                      |
+                   GraphQL
+                      |
+                      ↓
+                 Go Backend
+                      |
+          +-----------+-----------+
+          |                       |
+          ↓                       ↓
+   Event Intelligence       Watchlist / Auth
+          |                       |
+          +-----------+-----------+
+                      |
+                      ↓
                  PostgreSQL
-                 
-### Backend Structure
 
+                 
+Backend Structure
 backend/
-├── cmd/server/
+├── cmd/
+│   └── server/
 ├── internal/
 │   ├── auth/
 │   ├── change/
@@ -176,9 +190,9 @@ backend/
 │   └── 004_snapshot_history.sql
 └── mock/
     └── market_data.json
-
     
-### Frontend Structure
+Frontend Structure
+
 frontend/
 ├── public/
 ├── src/
@@ -198,7 +212,6 @@ Docker Desktop
 Git
 1. Clone the Repository
 git clone https://github.com/Harshavarthinie-R-J/stockstalk-smart-market-watchlist.git
-
 cd stockstalk-smart-market-watchlist
 2. Start PostgreSQL
 cd backend
@@ -223,6 +236,7 @@ http://localhost:8080/health
 GraphQL:
 
 http://localhost:8080/graphql
+
 4. Start Frontend
 
 Open another terminal:
@@ -234,6 +248,7 @@ npm run dev
 Frontend:
 
 http://localhost:5173
+
 Environment Variables
 Backend
 APP_PORT=8080
@@ -250,14 +265,19 @@ Production Deployment
 
 StockStalk is deployed using Render.
 
-### Frontend
-https://stockstalk-frontend.onrender.com
-Backend
-https://stockstalk-smart-market-watchlist-1.onrender.com
-GraphQL
-https://stockstalk-smart-market-watchlist-1.onrender.com/graphql
+Frontend
 
-### Architecture
+StockStalk Frontend
+
+Backend
+
+StockStalk Backend
+
+GraphQL API
+
+GraphQL Endpoint
+
+Deployment Architecture
 Browser
    ↓
 Render Frontend
@@ -267,8 +287,7 @@ HTTPS / GraphQL
 Render Go Backend
    ↓
 Render PostgreSQL
-
-### Database Migrations
+Database Migrations
 
 The project uses PostgreSQL migrations:
 
@@ -279,17 +298,12 @@ The project uses PostgreSQL migrations:
 
 The snapshot-history migration adds indexes for efficient historical data retrieval and snapshot deduplication.
 
-### Authentication
+Authentication
 
 StockStalk uses:
 
-JWT
-
-for authentication and:
-
-bcrypt
-
-for secure password hashing.
+JWT for authentication
+bcrypt for secure password hashing
 
 Authenticated GraphQL requests use:
 
