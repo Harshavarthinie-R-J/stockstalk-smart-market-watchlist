@@ -552,16 +552,11 @@ func (s *Server) Handler() http.Handler {
 	)
 }
 
-// ================================================================
-// CORS MIDDLEWARE
-// ================================================================
-
 func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		origin := r.Header.Get("Origin")
 
-		// Allow local development and deployed frontend
 		if origin == "http://localhost:5173" ||
 			origin == "https://stockstalk-frontend.onrender.com" {
 
@@ -574,7 +569,6 @@ func corsMiddleware(next http.Handler) http.Handler {
 			)
 		}
 
-		// Handle browser CORS preflight request
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusNoContent)
 			return
