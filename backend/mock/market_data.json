@@ -1,0 +1,120 @@
+{
+  "market": "NSE",
+  "last_updated": "2026-09-05T13:25:41+05:30",
+  "instruments": [
+    {
+      "id": "NSE_EQ_RELIANCE",
+      "symbol": "RELIANCE",
+      "name": "Reliance Industries Limited",
+      "exchange": "NSE",
+      "segment": "EQUITY",
+      "isin": "INE002A01018",
+      "currency": "INR",
+      "sector": "Energy",
+      "industry": "Oil & Gas"
+    },
+    {
+      "id": "NSE_EQ_TCS",
+      "symbol": "TCS",
+      "name": "Tata Consultancy Services Limited",
+      "exchange": "NSE",
+      "segment": "EQUITY",
+      "isin": "INE467B01029",
+      "currency": "INR",
+      "sector": "Information Technology",
+      "industry": "IT Services"
+    },
+    {
+      "id": "NSE_EQ_INFY",
+      "symbol": "INFY",
+      "name": "Infosys Limited",
+      "exchange": "NSE",
+      "segment": "EQUITY",
+      "isin": "INE009A01021",
+      "currency": "INR",
+      "sector": "Information Technology",
+      "industry": "IT Services"
+    },
+    {
+      "id": "NSE_EQ_HDFCBANK",
+      "symbol": "HDFCBANK",
+      "name": "HDFC Bank Limited",
+      "exchange": "NSE",
+      "segment": "EQUITY",
+      "isin": "INE040A01034",
+      "currency": "INR",
+      "sector": "Financial Services",
+      "industry": "Private Banks"
+    }
+  ],
+  "quotes": [
+    {
+      "instrument_id": "NSE_EQ_RELIANCE",
+      "symbol": "RELIANCE",
+      "price": 3012.4,
+      "previous_close": 2861.1,
+      "open": 2848.0,
+      "high": 3035.0,
+      "low": 2798.3,
+      "volume": 18453210,
+      "change": -48.7,
+      "change_percent": -1.7017,
+      "week_52_high": 3217.0,
+      "week_52_low": 2220.3,
+      "market_status": "OPEN",
+      "market_timestamp": "2026-09-05T13:25:39+05:30",
+      "source": "MOCK_PROVIDER"
+    },
+    {
+      "instrument_id": "NSE_EQ_TCS",
+      "symbol": "TCS",
+      "price": 3438.2,
+      "previous_close": 3399.8,
+      "open": 3410.0,
+      "high": 3452.6,
+      "low": 3397.4,
+      "volume": 6821190,
+      "change": 38.4,
+      "change_percent": 1.1295,
+      "week_52_high": 4592.2,
+      "week_52_low": 2983.2,
+      "market_status": "OPEN",
+      "market_timestamp": "2026-09-05T13:25:40+05:30",
+      "source": "MOCK_PROVIDER"
+    },
+    {
+      "instrument_id": "NSE_EQ_INFY",
+      "symbol": "INFY",
+      "price": 1617.8,
+      "previous_close": 1642.3,
+      "open": 1638.0,
+      "high": 1644.7,
+      "low": 1608.9,
+      "volume": 11582130,
+      "change": -24.5,
+      "change_percent": -1.4924,
+      "week_52_high": 1978.0,
+      "week_52_low": 1358.0,
+      "market_status": "OPEN",
+      "market_timestamp": "2026-09-05T13:25:38+05:30",
+      "source": "MOCK_PROVIDER"
+    },
+    {
+      "instrument_id": "NSE_EQ_HDFCBANK",
+      "symbol": "HDFCBANK",
+      "price": 1819.7,
+      "previous_close": 1808.4,
+      "open": 1809.0,
+      "high": 1827.5,
+      "low": 1798.4,
+      "volume": 9241820,
+      "change": 11.3,
+      "change_percent": 0.6249,
+      "week_52_high": 1880.0,
+      "week_52_low": 1363.5,
+      "market_status": "OPEN",
+      "market_timestamp": "2026-09-05T13:25:41+05:30",
+      "source": "MOCK_PROVIDER"
+    }
+  ]
+}

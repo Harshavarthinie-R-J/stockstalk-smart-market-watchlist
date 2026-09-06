@@ -1,0 +1,46 @@
+package graphql
+
+const Schema = `
+	type Query {
+		me: User
+		market: MarketData!
+		quote(symbol: String!): Quote
+		searchInstruments(query: String!): [Instrument!]!
+		watchlists: [Watchlist!]!
+		watchlist(id: ID!): Watchlist
+		changesSinceLastVisit(watchlistId: ID!): ChangeSummary!
+	}
+
+	type Mutation {
+		register(name: String!, email: String!, password: String!): AuthPayload!
+		login(email: String!, password: String!): AuthPayload!
+		createWatchlist(name: String!): Watchlist!
+		addStock(watchlistId: ID!, instrumentId: ID!): Boolean!
+		removeStock(watchlistId: ID!, instrumentId: ID!): Boolean!
+		createCheckpoint(watchlistId: ID!): Checkpoint!
+	}
+
+	type Subscription { meaningfulChange: MarketChange! }
+
+type User { id: ID!, name: String!, email: String!, createdAt: String! }
+type AuthPayload { user: User!, token: String! }
+type Instrument { id: ID!, symbol: String!, name: String!, exchange: String!, segment: String!, isin: String!, currency: String!, sector: String, industry: String }
+type Quote { instrumentId: ID!, symbol: String!, price: Float!, previousClose: Float!, open: Float!, high: Float!, low: Float!, volume: Int!, change: Float!, changePercent: Float!, week52High: Float!, week52Low: Float!, marketStatus: String!, marketTimestamp: String!, receivedTimestamp: String!, source: String! }
+type MarketData { market: String!, lastUpdated: String!, instruments: [Instrument!]!, quotes: [Quote!]! }
+type WatchItem { instrumentId: ID!, position: Int!, addedAt: String! }
+type Watchlist { id: ID!, name: String!, createdAt: String!, updatedAt: String!, stocks: [WatchItem!]! }
+type Checkpoint { id: ID!, watchlistId: ID!, createdAt: String! }
+type MarketChange {
+    id: ID!
+    instrumentId: ID!
+    symbol: String!
+    type: String!
+    severity: String!
+    previousValue: Float!
+    currentValue: Float!
+    changePercent: Float!
+    attentionScore: Int!
+    detectedAt: String!
+}
+type ChangeSummary { watchlistId: ID!, previousCheckpoint: String, currentTime: String!, totalStocks: Int!, meaningfulChanges: Int!, notableChanges: Int!, unchanged: Int!, changes: [MarketChange!]! }
+`
